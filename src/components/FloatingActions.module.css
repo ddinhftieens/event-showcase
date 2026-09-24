@@ -1,0 +1,441 @@
+.floatingWrapper {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+/* ============================================================
+   Playlist Popup Card (Glassmorphism & Micro-animations)
+   ============================================================ */
+.playlistCard {
+  width: 320px;
+  background: rgba(14, 10, 20, 0.92);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.94);
+  transform-origin: bottom right;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.3s;
+  overflow: hidden;
+  user-select: none;
+}
+
+.playlistCardOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Header */
+.playlistHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.headerTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+  transition: background-color 0.3s ease;
+}
+
+.headerLabel {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.songCountSub {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 1px;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.miniBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.miniBtn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: scale(1.1);
+  color: #ffffff;
+}
+
+.miniBtn:active {
+  transform: scale(0.92);
+}
+
+.miniPlayBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.miniPlayBtn:hover {
+  transform: scale(1.1);
+  filter: brightness(1.15);
+}
+
+.miniPlayBtn:active {
+  transform: scale(0.94);
+}
+
+/* Song List Items */
+.songList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.songList::-webkit-scrollbar {
+  width: 4px;
+}
+
+.songList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.songList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.songItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.songItem:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(-3px);
+}
+
+.songItemActive {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.songItemLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.itemIndexBox {
+  width: 22px;
+  font-size: 11.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.songItemWave {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.songItemWave span {
+  width: 2px;
+  height: 100%;
+  background: currentColor;
+  border-radius: 1px;
+  animation: itemWaveMotion 0.8s ease-in-out infinite alternate;
+}
+
+.songItemWave span:nth-child(1) { animation-duration: 0.5s; }
+.songItemWave span:nth-child(2) { animation-duration: 0.7s; animation-delay: 0.15s; }
+.songItemWave span:nth-child(3) { animation-duration: 0.6s; animation-delay: 0.3s; }
+
+@keyframes itemWaveMotion {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+
+.itemInfo {
+  min-width: 0;
+  flex: 1;
+}
+
+.itemTitle {
+  font-size: 13px;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemArtist {
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+.itemDuration {
+  font-size: 11px;
+  color: #64748b;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+/* Card Footer & Interactive Seek Bar */
+.cardFooter {
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nowPlayingTitle {
+  font-size: 11.5px;
+  color: #94a3b8;
+  display: flex;
+  gap: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nowPlayingTitle strong {
+  color: #ffffff;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trackContainer {
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.trackBg {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  position: relative;
+  overflow: visible;
+}
+
+.trackFill {
+  height: 100%;
+  border-radius: 4px;
+  position: relative;
+  transition: width 0.15s linear;
+}
+
+.trackKnob {
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.trackContainer:hover .trackKnob {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.2);
+}
+
+.timeInfoRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: #64748b;
+}
+
+/* ============================================================
+   Floating Vinyl Disc Button (Vân đĩa than & Sóng âm ở giữa)
+   ============================================================ */
+.circleBtn {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 35% 35%, #241f30 0%, #0d0a14 100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+}
+
+.circleBtn:hover {
+  transform: scale(1.1);
+}
+
+.circleBtn:active {
+  transform: scale(0.94);
+}
+
+.vinylGrooves {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0,
+    transparent 2px,
+    rgba(255, 255, 255, 0.05) 3px,
+    transparent 4px
+  );
+  pointer-events: none;
+}
+
+.centerBadge {
+  position: relative;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+.spinningDisc {
+  animation: spinRecord 6s linear infinite;
+}
+
+@keyframes spinRecord {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================
+   Sound Waves right inside the Center Disc
+   ============================================================ */
+.centerWaves {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5px;
+  height: 16px;
+  width: 22px;
+}
+
+.centerWaves span {
+  width: 2px;
+  height: 100%;
+  border-radius: 2px;
+  animation: centerWavePulse 0.9s ease-in-out infinite alternate;
+}
+
+.centerWaves span:nth-child(1) { animation-duration: 0.5s; }
+.centerWaves span:nth-child(2) { animation-duration: 0.8s; animation-delay: 0.1s; }
+.centerWaves span:nth-child(3) { animation-duration: 0.6s; animation-delay: 0.25s; }
+.centerWaves span:nth-child(4) { animation-duration: 0.75s; animation-delay: 0.15s; }
+.centerWaves span:nth-child(5) { animation-duration: 0.55s; animation-delay: 0.3s; }
+
+@keyframes centerWavePulse {
+  0% {
+    height: 3px;
+    opacity: 0.5;
+  }
+  100% {
+    height: 15px;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .floatingWrapper {
+    bottom: 20px;
+    right: 20px;
+  }
+  .playlistCard {
+    width: 280px;
+  }
+  .circleBtn {
+    width: 56px;
+    height: 56px;
+  }
+  .centerBadge {
+    width: 30px;
+    height: 30px;
+  }
+}
