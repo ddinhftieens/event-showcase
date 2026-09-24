@@ -21,11 +21,30 @@ export function HeroPoster({ event }: HeroPosterProps) {
 
       <div className={styles.posterWrapper}>
         {!imgLoaded && (
-          <div className={styles.posterSkeleton}>
-            <div className={styles.skeletonIcon}>🏮</div>
-            <span>Đang tải poster...</span>
+          <div className={styles.loaderContainer}>
+            {/* Ambient Background Aura */}
+            <div
+              className={styles.loaderGlow}
+              style={{
+                background: `radial-gradient(circle, ${event.theme.glowColor || 'rgba(245, 158, 11, 0.35)'} 0%, transparent 70%)`,
+              }}
+            />
+
+            {/* Event Title & Shimmering Status */}
+            <div className={styles.loaderTextGroup}>
+              <h2 className={styles.loaderTitle}>{event.title}</h2>
+              <div className={styles.shimmerLineWrapper}>
+                <div
+                  className={styles.shimmerLine}
+                  style={{
+                    background: `linear-gradient(90deg, transparent, ${event.theme.accentColor || '#fde047'}, transparent)`,
+                  }}
+                />
+              </div>
+            </div>
           </div>
         )}
+
         <img
           ref={imgRef}
           src={posterSrc}

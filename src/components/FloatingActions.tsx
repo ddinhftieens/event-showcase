@@ -133,12 +133,9 @@ export function FloatingActions({ event }: FloatingMusicButtonProps) {
         >
           {/* Card Header */}
           <div className={styles.playlistHeader}>
-            <div className={styles.headerTitleRow}>
-              <div className={styles.liveDot} style={{ backgroundColor: isPlaying ? '#22c55e' : '#94a3b8' }} />
-              <div>
-                <div className={styles.headerLabel}>DANH SÁCH BÀI HÁT</div>
-                <div className={styles.songCountSub}>{songs.length} bài hát • {isPlaying ? 'Đang phát' : 'Tạm dừng'}</div>
-              </div>
+            <div className={styles.headerTitles}>
+              <div className={styles.headerLabel}>DANH SÁCH BÀI HÁT</div>
+              <div className={styles.songCountSub}>{songs.length} bài hát</div>
             </div>
 
             {/* Header Mini Controls */}
@@ -160,12 +157,12 @@ export function FloatingActions({ event }: FloatingMusicButtonProps) {
                 aria-label={isPlaying ? 'Tạm dừng' : 'Phát'}
               >
                 {isPlaying ? (
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#0f0c08">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="#0f0c08">
                     <rect x="6" y="4" width="4" height="16" rx="1.5" />
                     <rect x="14" y="4" width="4" height="16" rx="1.5" />
                   </svg>
                 ) : (
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#0f0c08" style={{ marginLeft: '1.5px' }}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="#0f0c08" style={{ marginLeft: '1.5px' }}>
                     <polygon points="6 4 20 12 6 20 6 4" />
                   </svg>
                 )}
@@ -192,8 +189,8 @@ export function FloatingActions({ event }: FloatingMusicButtonProps) {
                   style={
                     isCurrent
                       ? {
-                          borderColor: 'rgba(255, 255, 255, 0.18)',
-                          background: `linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)`,
+                          borderColor: 'rgba(255, 255, 255, 0.16)',
+                          background: `linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%)`,
                         }
                       : {}
                   }
@@ -231,7 +228,7 @@ export function FloatingActions({ event }: FloatingMusicButtonProps) {
                           className={styles.itemArtist}
                           style={{
                             color: isCurrent ? (event.theme.accentColor || '#fde047') : '#94a3b8',
-                            opacity: isCurrent ? 0.9 : 0.7,
+                            opacity: isCurrent ? 0.95 : 0.7,
                           }}
                         >
                           {song.artist}
@@ -249,8 +246,8 @@ export function FloatingActions({ event }: FloatingMusicButtonProps) {
           {/* Now Playing Bar & Interactive Seek Track */}
           <div className={styles.cardFooter}>
             <div className={styles.nowPlayingTitle}>
-              <span>{isPlaying ? 'Đang phát:' : 'Tạm dừng:'}</span>
-              <strong>{currentSong?.title}</strong>
+              <span className={styles.currentTrackName}>{currentSong?.title}</span>
+              {currentSong?.artist && <span className={styles.currentTrackArtist}>• {currentSong.artist}</span>}
             </div>
 
             <div className={styles.trackContainer} onClick={handleSeek} role="slider" aria-valuenow={progress}>
