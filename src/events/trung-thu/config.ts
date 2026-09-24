@@ -3,8 +3,8 @@ import type { EventConfig } from '../../types/event';
 export const trungThuEvent: EventConfig = {
   id: 'trung-thu',
   title: 'Tết Trung Thu',
-  poster: 'events/trungthu/image/trung_thu.png',
-  posterFallback: 'events/trungthu/image/trung_thu.png',
+  poster: 'events/trungthu/image/trung_thu_1.png',
+  posterFallback: 'events/trungthu/image/trung_thu_1.png',
   favicon: 'events/trungthu/favicon/trungthu.png',
   theme: {
     primaryColor: '#f59e0b',
